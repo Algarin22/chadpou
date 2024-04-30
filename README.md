@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include<time.h>
+#include<Windows.h>
 
 using namespace std;
 
 void dormido()
 {
+    
     string text;
     ifstream archivo("MuñecoDormido.txt");
 
@@ -15,29 +18,58 @@ void dormido()
         cout << text << "\n";
     }
     archivo.close();
+   
 }
 
 const string& nombreMascota()
 {
     static string nombre;
-    
+
     cout << "Introduzca el nombre de su chadpou: ";
     cin >> nombre;
     cout << endl;
 
     return nombre;
 }
-
-/*
-void serio()
-{}
 void Feliz()
-{}
+{
+    string text;
+    ifstream archivo("muñecofeliz.txt");
+
+    while (getline(archivo, text))
+    {
+        cout << text << "\n";
+    }
+    archivo.close();
+}
+void comida()
+{
+    const char* comida[5] = { "Arroz","Guineo","Manzana","Habichuela","Agua" };
+    for (int i = 0;i < 5;i++)
+    {
+        cout << comida[i] << "\n";
+    }
+}
+
+void serio()
+{
+    string text;
+    ifstream archivo("muñecoserio.txt");
+
+    while (getline(archivo, text))
+    {
+        cout << text << "\n";
+    }
+    archivo.close();
+}
+
 void enojado()
-{}
+{
+}
 void triste()
-{}
-*/
+{
+}
+
 
 
 int main()
@@ -52,6 +84,7 @@ int main()
 
     do
     {
+        Feliz();
         cout << "Elige una de las siguientes opciones: " << endl;
         cout << "a. Inicio" << endl;
         cout << "b. Reglas" << endl;
@@ -63,6 +96,7 @@ int main()
         switch (opcion)
         {
         case 'a':
+            system("CLS");
             break;
         case 'b':
             cout << "Reglas: " << endl;
@@ -80,21 +114,25 @@ int main()
             cout << "Opcion: ";
             cin >> opcion2;
             cout << endl;
-            
+
             if (opcion2 == 'a')
             {
+                comida();
                 cout << "Tu chadpou ya no tiene hambre." << endl;
                 cout << "Para volver al inicio coloque 'a': ";
                 cin >> opcion;
                 cout << endl;
+                system("CLS");
             }
             else if (opcion2 == 'b')
             {
                 dormido();
                 cout << endl;
+                cout << nombre << " Se a ido a dormir\n";
                 cout << "Para volver al inicio coloque 'a': ";
                 cin >> opcion;
                 cout << endl;
+                
             }
 
             break;
