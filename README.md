@@ -13,17 +13,41 @@ time_t ultimaJugada;
 time_t tiempoNecesidades;
 bool necesitaLimpiar = false;
 string nombre;
+time_t tiempoDormido = 0;
+bool durmiendo = false;
+bool estaDormido = false;
 
 void dormido()
 {
     string text;
-    ifstream archivo("MuñecoDormido.txt");
+    ifstream archivo("Muñecodormido.txt");
 
     while (getline(archivo, text))
     {
         cout << text << "\n";
     }
     archivo.close();
+    if (!durmiendo)
+    {
+        time(&tiempoDormido); 
+        durmiendo = true; 
+        cout << nombre << " se ha ido a dormir." << endl;
+    }
+    else
+    {
+        time_t ahora;
+        time(&ahora);
+        double tiempo_transcurrido = difftime(ahora, tiempoDormido); 
+        if (tiempo_transcurrido < 60) 
+        { 
+            cout << nombre << " sigue durmiendo. Tiempo restante: " << 60 - static_cast<int>(tiempo_transcurrido) << " segundos." << endl;
+        }
+        else 
+        { 
+            cout << nombre << " ha despertado." << endl;
+            durmiendo = false; 
+        }
+    }
 }
 
 void Feliz()
@@ -122,7 +146,7 @@ void triste()
 
 void jugarPiedraPapelTijeras()
 {
-    cout << "Bienvenido a Piedra, Papel o Tijeras!" << endl;
+    cout << "Bienvenido a Piedra, Papel o Tijeras del gran chadpou!" << endl;
     cout << "Elige tu opcion: " << endl;
     cout << "1. Piedra" << endl;
     cout << "2. Papel" << endl;
@@ -151,19 +175,19 @@ void jugarPiedraPapelTijeras()
 
     if (opcionJugador == opChadpou)
     {
-        cout << "¡Empate!" << endl;
+        cout << "Empate!" << endl;
     }
     else if ((opcionJugador == 1 && opChadpou == 3) || (opcionJugador == 2 && opChadpou == 1) || (opcionJugador == 3 && opChadpou == 2))
     {
         int monedasGanadas = rand() % 20 + 1;
-        cout << "¡Ganaste! Ganaste " << monedasGanadas << " monedas." << endl;
+        cout << "Ganaste! Ganaste " << monedasGanadas << " monedas." << endl;
         monedas += monedasGanadas;
         enojado();
         cout << "******************************************************************************************************\n";
     }
     else
     {
-        cout << "¡Perdiste! Inténtalo de nuevo." << endl;
+        cout << "QUE PENA!! Gano "<<nombre<<" intentelo de nuevo." << endl;
 
     }
 }
@@ -202,6 +226,10 @@ void jugarAdivinanza()
     }
 
     cout << "Lo siento, has agotado todos tus intentos. El numero secreto era: " << numeroSecreto << endl;
+}
+void banco()
+{
+    cout << "Estas son la cantidad de monedas que tiene: " << monedas << endl;
 }
 
 void juegoMemoria()
@@ -289,10 +317,11 @@ void verificarNecesidades()
 
     if (ahora - ultimaComida >= 300 && ahora >= tiempoNecesidades && !necesitaLimpiar)
     {
-        cout << "¡" << nombre << " ha hecho sus necesidades! Deberías limpiarlo." << endl;
+        cout << "¡" << nombre << " ha hecho sus necesidades! Deberias limpiarlo." << endl;
         necesitaLimpiar = true;
     }
 }
+
 
 int main()
 {
@@ -312,6 +341,7 @@ int main()
     {
         Feliz();
         verificarNecesidades();
+       ;
        
         cout << "Elige una de las siguientes opciones: " << endl;
         cout << "a. Inicio" << endl;
@@ -325,7 +355,7 @@ int main()
         switch (opcion)
         {
         case 'a':
-            system("CLS");
+            
             break;
         case 'b':
             cout << "Reglas: " << endl;
@@ -343,9 +373,14 @@ int main()
             cout << "c. Jugar Piedra, Papel o Tijeras" << endl;
             cout << "d. Jugar Adivinanza" << endl;
             cout << "e. Juego de Memoria" << endl;
+            cout << "g. Banco" << endl;
             if (necesitaLimpiar)
             {
                 cout << "f. Limpiar" << endl;
+            }
+            if (estaDormido)
+            {
+                cout << "g. Despertar" << endl; // Opción para despertar al Chadpou si está dormido
             }
             cout << "Opcion: ";
             cin >> opcion2;
@@ -361,35 +396,68 @@ int main()
             }
             else if (opcion2 == 'b')
             {
-                dormido();
-                cout << endl;
-                cout << nombre << " Se a ido a dormir\n";
-                cout << "Para volver al inicio coloque 'a': ";
-                cin >> opcion;
-                cout << endl;
+                if (!estaDormido) // Solo se puede dormir si no está ya dormido
+                {
+                    dormido();
+                    cout << endl;
+                    cout << nombre << " Se a ido a dormir\n";
+                    estaDormido = true;
+                    cout << "Para volver al inicio coloque 'a': ";
+                    cin >> opcion;
+                    cout << endl;
+                }
+                else
+                {
+                    cout << nombre << " ya está dormido." << endl;
+                }
             }
             else if (opcion2 == 'c')
             {
-                jugarPiedraPapelTijeras();
+                if (!estaDormido) // Solo se puede jugar si no está dormido
+                {
+                    jugarPiedraPapelTijeras();
+                }
+                else
+                {
+                    cout << nombre << " está dormido. Despiertalo antes de jugar." << endl;
+                }
             }
             else if (opcion2 == 'd')
             {
-                jugarAdivinanza();
+                if (!estaDormido) // Solo se puede jugar si no está dormido
+                {
+                    jugarAdivinanza();
+                }
+                else
+                {
+                    cout << nombre << " está dormido. Despiertalo antes de jugar." << endl;
+                }
             }
             else if (opcion2 == 'e')
             {
-                juegoMemoria();
+                if (!estaDormido) // Solo se puede jugar si no está dormido
+                {
+                    juegoMemoria();
+                }
+                else
+                {
+                    cout << nombre << " está dormido. Despiertalo antes de jugar." << endl;
+                }
             }
             else if (opcion2 == 'f' && necesitaLimpiar)
             {
                 limpiarNecesidades();
+            }
+            else if (opcion2 == 'g')
+            {
+                banco();
             }
 
             break;
         }
     } while (opcion != 'd');
 
-    cout << "Gracias por jugar. ¡Hasta luego!" << endl;
+    cout << "Gracias por jugar. Hasta luego!" << endl;
 
     return 0;
 }
