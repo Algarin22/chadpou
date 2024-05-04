@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <time.h>
+#include <thread>
 #include <Windows.h>
 
 using namespace std;
@@ -16,7 +17,27 @@ string nombre;
 time_t tiempoDormido = 0;
 bool durmiendo = false;
 bool estaDormido = false;
+bool salir = false;
 
+
+
+void actualizarEstadoDormido() 
+{
+    while (!salir) {
+        if (durmiendo) {
+            time_t ahora;
+            time(&ahora);
+            double tiempo_transcurrido = difftime(ahora, tiempoDormido);
+            if (tiempo_transcurrido >= 60) {
+                cout << nombre << " ha despertado." << endl;
+                durmiendo = false;
+                estaDormido = false;
+                tiempoDormido = 0;
+            }
+        }
+        Sleep(1000); // Esperar 1 segundo
+    }
+}
 void dormido()
 {
     string text;
@@ -27,25 +48,29 @@ void dormido()
         cout << text << "\n";
     }
     archivo.close();
+
     if (!durmiendo)
     {
-        time(&tiempoDormido); 
-        durmiendo = true; 
+        time(&tiempoDormido);
+        durmiendo = true;
+        estaDormido = true; // Agregar esta línea
         cout << nombre << " se ha ido a dormir." << endl;
     }
     else
     {
         time_t ahora;
         time(&ahora);
-        double tiempo_transcurrido = difftime(ahora, tiempoDormido); 
-        if (tiempo_transcurrido < 60) 
-        { 
+        double tiempo_transcurrido = difftime(ahora, tiempoDormido);
+        if (tiempo_transcurrido < 60)
+        {
             cout << nombre << " sigue durmiendo. Tiempo restante: " << 60 - static_cast<int>(tiempo_transcurrido) << " segundos." << endl;
         }
-        else 
-        { 
+        else
+        {
             cout << nombre << " ha despertado." << endl;
-            durmiendo = false; 
+            durmiendo = false;
+            estaDormido = false; // Agregar esta línea
+            tiempoDormido = 0; // Reiniciar el tiempo dormido
         }
     }
 }
@@ -191,7 +216,20 @@ void jugarPiedraPapelTijeras()
 
     }
 }
-
+void despertar()
+{
+    if (durmiendo) // Verificar si está durmiendo
+    {
+        cout << nombre << " ha despertado." << endl;
+        durmiendo = false; // Cambiar el estado a despierto
+        estaDormido = false; // Cambiar el estado a despierto
+        tiempoDormido = 0; // Reiniciar el tiempo dormido
+    }
+    else
+    {
+        cout << nombre << " ya está despierto." << endl;
+    }
+}
 void jugarAdivinanza()
 {
     srand(time(NULL));
@@ -339,9 +377,18 @@ int main()
 
     do
     {
-        Feliz();
-        verificarNecesidades();
-       ;
+        thread hiloActualizarEstado(actualizarEstadoDormido);
+        if (!estaDormido)
+        {
+            Feliz();
+            verificarNecesidades();
+        }
+        else
+        {
+            dormido();
+        }
+        salir = true;
+        hiloActualizarEstado.join();
        
         cout << "Elige una de las siguientes opciones: " << endl;
         cout << "a. Inicio" << endl;
@@ -380,7 +427,7 @@ int main()
             }
             if (estaDormido)
             {
-                cout << "g. Despertar" << endl; // Opción para despertar al Chadpou si está dormido
+                cout << "h. Despertar" << endl; // Opción para despertar al Chadpou si está dormido
             }
             cout << "Opcion: ";
             cin >> opcion2;
@@ -452,12 +499,16 @@ int main()
             {
                 banco();
             }
+            break;
+        case 'h':
 
+            despertar();
             break;
         }
     } while (opcion != 'd');
 
     cout << "Gracias por jugar. Hasta luego!" << endl;
+    
 
     return 0;
 }
