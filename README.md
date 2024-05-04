@@ -21,7 +21,7 @@ bool salir = false;
 
 
 
-void actualizarEstadoDormido() 
+void actualizarEstadoDormido()
 {
     while (!salir) {
         if (durmiendo) {
@@ -129,6 +129,12 @@ void comida()
 
 void limpiarNecesidades()
 {
+    
+        srand(time(NULL));
+        int monedasGanadas = rand() % 3 + 1; 
+        monedas += monedasGanadas; 
+        cout << "Has limpiado las necesidades de " << nombre << ". Has ganado " << monedasGanadas << " monedas." << endl;
+    
     necesitaLimpiar = false;
     cout << "Has limpiado las necesidades de " << nombre << "." << endl;
 }
@@ -212,24 +218,11 @@ void jugarPiedraPapelTijeras()
     }
     else
     {
-        cout << "QUE PENA!! Gano "<<nombre<<" intentelo de nuevo." << endl;
+        cout << "QUE PENA!! Gano " << nombre << " intentelo de nuevo." << endl;
 
     }
 }
-void despertar()
-{
-    if (durmiendo) // Verificar si está durmiendo
-    {
-        cout << nombre << " ha despertado." << endl;
-        durmiendo = false; // Cambiar el estado a despierto
-        estaDormido = false; // Cambiar el estado a despierto
-        tiempoDormido = 0; // Reiniciar el tiempo dormido
-    }
-    else
-    {
-        cout << nombre << " ya está despierto." << endl;
-    }
-}
+
 void jugarAdivinanza()
 {
     srand(time(NULL));
@@ -377,7 +370,7 @@ int main()
 
     do
     {
-        thread hiloActualizarEstado(actualizarEstadoDormido);
+
         if (!estaDormido)
         {
             Feliz();
@@ -388,8 +381,8 @@ int main()
             dormido();
         }
         salir = true;
-        hiloActualizarEstado.join();
-       
+
+
         cout << "Elige una de las siguientes opciones: " << endl;
         cout << "a. Inicio" << endl;
         cout << "b. Reglas" << endl;
@@ -402,7 +395,7 @@ int main()
         switch (opcion)
         {
         case 'a':
-            
+
             break;
         case 'b':
             cout << "Reglas: " << endl;
@@ -425,10 +418,7 @@ int main()
             {
                 cout << "f. Limpiar" << endl;
             }
-            if (estaDormido)
-            {
-                cout << "h. Despertar" << endl; // Opción para despertar al Chadpou si está dormido
-            }
+
             cout << "Opcion: ";
             cin >> opcion2;
             cout << endl;
@@ -488,7 +478,7 @@ int main()
                 }
                 else
                 {
-                    cout << nombre << " está dormido. Despiertalo antes de jugar." << endl;
+                    cout << nombre << " está dormido. Tienes que esperar a que despierte." << endl;
                 }
             }
             else if (opcion2 == 'f' && necesitaLimpiar)
@@ -500,15 +490,13 @@ int main()
                 banco();
             }
             break;
-        case 'h':
 
-            despertar();
-            break;
-        }
-    } while (opcion != 'd');
 
-    cout << "Gracias por jugar. Hasta luego!" << endl;
-    
+        } while (opcion != 'd');
 
-    return 0;
+        cout << "Gracias por jugar. Hasta luego!" << endl;
+       
+        return 0;
+    }
+
 }
