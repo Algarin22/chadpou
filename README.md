@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <time.h>
-#include <thread>
 #include <Windows.h>
 
 using namespace std;
@@ -17,27 +16,7 @@ string nombre;
 time_t tiempoDormido = 0;
 bool durmiendo = false;
 bool estaDormido = false;
-bool salir = false;
 
-
-
-void actualizarEstadoDormido()
-{
-    while (!salir) {
-        if (durmiendo) {
-            time_t ahora;
-            time(&ahora);
-            double tiempo_transcurrido = difftime(ahora, tiempoDormido);
-            if (tiempo_transcurrido >= 60) {
-                cout << nombre << " ha despertado." << endl;
-                durmiendo = false;
-                estaDormido = false;
-                tiempoDormido = 0;
-            }
-        }
-        Sleep(1000); // Esperar 1 segundo
-    }
-}
 void dormido()
 {
     string text;
@@ -48,12 +27,10 @@ void dormido()
         cout << text << "\n";
     }
     archivo.close();
-
     if (!durmiendo)
     {
         time(&tiempoDormido);
         durmiendo = true;
-        estaDormido = true; // Agregar esta línea
         cout << nombre << " se ha ido a dormir." << endl;
     }
     else
@@ -69,8 +46,6 @@ void dormido()
         {
             cout << nombre << " ha despertado." << endl;
             durmiendo = false;
-            estaDormido = false; // Agregar esta línea
-            tiempoDormido = 0; // Reiniciar el tiempo dormido
         }
     }
 }
@@ -89,8 +64,8 @@ void Feliz()
 
 void comida()
 {
-    const char* comida[5] = { "Arroz", "Guineo", "Manzana", "Habichuela", "Agua" };
-    int precios[5] = { 20, 12, 15, 5, 3 };
+    const char* comida[7] = { "Arroz", "Guineo", "Manzana", "Habichuela", "Agua", "Jugo de china", "Jamon"};
+    int precios[7] = { 20, 12, 15, 5, 3, 5, 10 };
     cout << "Cantidad de monedas que tiene: " << monedas << endl;
     cout << "Lista de alimentos:" << endl;
     for (int i = 0; i < 5; i++)
@@ -129,12 +104,12 @@ void comida()
 
 void limpiarNecesidades()
 {
-    
-        srand(time(NULL));
-        int monedasGanadas = rand() % 3 + 1; 
-        monedas += monedasGanadas; 
-        cout << "Has limpiado las necesidades de " << nombre << ". Has ganado " << monedasGanadas << " monedas." << endl;
-    
+
+    srand(time(NULL));
+    int monedasGanadas = rand() % 3 + 1;
+    monedas += monedasGanadas;
+    cout << "Has limpiado las necesidades de " << nombre << ". Has ganado " << monedasGanadas << " monedas." << endl;
+
     necesitaLimpiar = false;
     cout << "Has limpiado las necesidades de " << nombre << "." << endl;
 }
@@ -353,7 +328,6 @@ void verificarNecesidades()
     }
 }
 
-
 int main()
 {
     char opcion;
@@ -370,7 +344,6 @@ int main()
 
     do
     {
-
         if (!estaDormido)
         {
             Feliz();
@@ -380,9 +353,6 @@ int main()
         {
             dormido();
         }
-        salir = true;
-
-
         cout << "Elige una de las siguientes opciones: " << endl;
         cout << "a. Inicio" << endl;
         cout << "b. Reglas" << endl;
@@ -418,7 +388,6 @@ int main()
             {
                 cout << "f. Limpiar" << endl;
             }
-
             cout << "Opcion: ";
             cin >> opcion2;
             cout << endl;
@@ -456,7 +425,7 @@ int main()
                 }
                 else
                 {
-                    cout << nombre << " está dormido. Despiertalo antes de jugar." << endl;
+                    cout << nombre << " está dormido. Espere a que se despierte." << endl;
                 }
             }
             else if (opcion2 == 'd')
@@ -467,7 +436,7 @@ int main()
                 }
                 else
                 {
-                    cout << nombre << " está dormido. Despiertalo antes de jugar." << endl;
+                    cout << nombre << " está dormido. Espere a que se despierte." << endl;
                 }
             }
             else if (opcion2 == 'e')
@@ -478,7 +447,7 @@ int main()
                 }
                 else
                 {
-                    cout << nombre << " está dormido. Tienes que esperar a que despierte." << endl;
+                    cout << nombre << " está dormido. Espere a que se despierte." << endl;
                 }
             }
             else if (opcion2 == 'f' && necesitaLimpiar)
@@ -489,14 +458,12 @@ int main()
             {
                 banco();
             }
+
             break;
+        }
+    } while (opcion != 'd');
 
+    cout << "Gracias por jugar. Hasta luego!" << endl;
 
-        } while (opcion != 'd');
-
-        cout << "Gracias por jugar. Hasta luego!" << endl;
-       
-        return 0;
-    }
-
+    return 0;
 }
