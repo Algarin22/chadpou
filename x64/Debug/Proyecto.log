@@ -1,0 +1,7 @@
+﻿  Proyecto.cpp
+C:\Users\axel1\source\repos\Proyecto\Proyecto.cpp(109,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\axel1\source\repos\Proyecto\Proyecto.cpp(154,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\axel1\source\repos\Proyecto\Proyecto.cpp(193,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\axel1\source\repos\Proyecto\Proyecto.cpp(239,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\axel1\source\repos\Proyecto\Proyecto.cpp(331,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Proyecto.vcxproj -> C:\Users\axel1\source\repos\Proyecto\x64\Debug\Proyecto.exe
