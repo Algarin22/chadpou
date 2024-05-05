@@ -64,8 +64,8 @@ void Feliz()
 
 void comida()
 {
-    const char* comida[7] = { "Arroz", "Guineo", "Manzana", "Habichuela", "Agua", "Jugo de china", "Jamon"};
-    int precios[7] = { 20, 12, 15, 5, 3, 5, 10 };
+    const char* comida[5] = { "Arroz", "Guineo", "Manzana", "Habichuela", "Agua"};
+    int precios[5] = { 20, 12, 15, 5, 3 };
     cout << "Cantidad de monedas que tiene: " << monedas << endl;
     cout << "Lista de alimentos:" << endl;
     for (int i = 0; i < 5; i++)
@@ -74,7 +74,7 @@ void comida()
     }
 
     int opcion;
-    cout << "Seleccione el alimento que desea comprar: ";
+    cout << "Seleccione el alimento que desea comprar, si no lo quiere alimentar precione 5: ";
     cin >> opcion;
     opcion--;
 
@@ -113,19 +113,6 @@ void limpiarNecesidades()
     necesitaLimpiar = false;
     cout << "Has limpiado las necesidades de " << nombre << "." << endl;
 }
-
-void serio()
-{
-    string text;
-    ifstream archivo("muñecoserio.txt");
-
-    while (getline(archivo, text))
-    {
-        cout << text << "\n";
-    }
-    archivo.close();
-}
-
 void enojado()
 {
     string text;
@@ -152,6 +139,7 @@ void triste()
 
 void jugarPiedraPapelTijeras()
 {
+    system("CLS");
     cout << "Bienvenido a Piedra, Papel o Tijeras del gran chadpou!" << endl;
     cout << "Elige tu opcion: " << endl;
     cout << "1. Piedra" << endl;
@@ -200,6 +188,7 @@ void jugarPiedraPapelTijeras()
 
 void jugarAdivinanza()
 {
+    system("CLS");
     srand(time(NULL));
     int numeroSecreto = rand() % 100 + 1;
     int intentos = 10;
@@ -232,6 +221,8 @@ void jugarAdivinanza()
     }
 
     cout << "Lo siento, has agotado todos tus intentos. El numero secreto era: " << numeroSecreto << endl;
+    triste();
+    cout << "******************************************************************************************************\n";
 }
 void banco()
 {
@@ -240,6 +231,7 @@ void banco()
 
 void juegoMemoria()
 {
+    system("CLS");
     cout << "¡Bienvenido al juego de memoria!" << endl;
     cout << "Se te mostraran una serie de numeros. Memorízalos y luego intenta repetirlos." << endl;
 
@@ -255,32 +247,32 @@ void juegoMemoria()
         int numeros[MAX_NUMEROS];
         int numerosUsuario[MAX_NUMEROS];
 
-        // Generar números aleatorios
+        
         for (int i = 0; i < nivel; ++i)
         {
-            numeros[i] = rand() % 10; // Números aleatorios del 0 al 9
+            numeros[i] = rand() % 10; 
         }
 
-        // Mostrar números al jugador
+        
         for (int i = 0; i < nivel; ++i)
         {
             cout << numeros[i] << " ";
         }
         cout << endl;
 
-        // Esperar unos segundos para que el jugador memorice los números
+        
         cout << "Memoriza los numeros... (5 segundos)" << endl;
-        // Pausa de 5 segundos
+       
         for (int i = 0; i < 5; ++i)
         {
             cout << 5 - i << "... ";
-            cout.flush(); // Limpiar el buffer de salida para mostrar los números en orden
+            cout.flush(); 
             Sleep(1000); // Windows
         }
         cout << endl;
 
-        // Limpiar la pantalla
-        system("CLS||clear");
+        
+        system("CLS");
 
         // Pedir al jugador que repita los números
         cout << "Ingresa los numeros que memorizaste, separados por espacios:" << endl;
@@ -305,6 +297,7 @@ void juegoMemoria()
         {
             cout << "¡Correcto! Pasas al siguiente nivel." << endl;
             int monedasGanadas = rand() % 5 + 1;
+            monedas += monedasGanadas;
             cout << "Gano estas monedas: " << monedasGanadas << endl;
             ++nivel;
         }
@@ -312,6 +305,8 @@ void juegoMemoria()
         {
             cout << "¡Incorrecto! Fin del juego." << endl;
             juegoTerminado = true;
+            triste();
+            cout << "******************************************************************************************************\n";
         }
     }
 }
@@ -398,7 +393,7 @@ int main()
                 cout << "Para volver al inicio coloque 'a': ";
                 cin >> opcion;
                 cout << endl;
-                system("CLS");
+                
             }
             else if (opcion2 == 'b')
             {
