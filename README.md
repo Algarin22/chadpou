@@ -98,7 +98,7 @@ void comida()
     }
     else
     {
-        cout << "Opción inválida." << endl;
+        cout << "Opcion invalida." << endl;
     }
 }
 
