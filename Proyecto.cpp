@@ -19,7 +19,7 @@ bool estaDormido = false;
 void dormido()
 {
     string text;
-    ifstream archivo("Muñecodormido.txt");
+    ifstream archivo("MuÃ±ecodormido.txt");
 
     while (getline(archivo, text))
     {
@@ -54,7 +54,7 @@ void dormido()
 void Feliz()
 {
     string text;
-    ifstream archivo("muñecofeliz.txt");
+    ifstream archivo("muÃ±ecofeliz.txt");
 
     while (getline(archivo, text))
     {
@@ -99,7 +99,7 @@ void comida()
     }
     else
     {
-        cout << "Opción inválida." << endl;
+        cout << "Opcion invalida." << endl;
     }
 }
 
@@ -117,7 +117,7 @@ void limpiarNecesidades()
 void enojado()
 {
     string text;
-    ifstream archivo("muñeco enojado.txt");
+    ifstream archivo("muÃ±eco enojado.txt");
 
     while (getline(archivo, text))
     {
@@ -129,7 +129,7 @@ void enojado()
 void triste()
 {
     string text;
-    ifstream archivo("muñecotriste.txt");
+    ifstream archivo("muÃ±ecotriste.txt");
 
     while (getline(archivo, text))
     {
@@ -205,7 +205,7 @@ void jugarAdivinanza()
         if (intento == numeroSecreto)
         {
             int monedasGanadas = rand() % 50 + 1;
-            cout << "¡Felicidades! Has adivinado el numero secreto. Ganaste " << monedasGanadas << " monedas." << endl;
+            cout << "Â¡Felicidades! Has adivinado el numero secreto. Ganaste " << monedasGanadas << " monedas." << endl;
             monedas += monedasGanadas;
             return;
         }
@@ -233,8 +233,8 @@ void banco()
 void juegoMemoria()
 {
     system("CLS");
-    cout << "¡Bienvenido al juego de memoria!" << endl;
-    cout << "Se te mostraran una serie de numeros. Memorízalos y luego intenta repetirlos." << endl;
+    cout << "Â¡Bienvenido al juego de memoria!" << endl;
+    cout << "Se te mostraran una serie de numeros. MemorÃ­zalos y luego intenta repetirlos." << endl;
 
     srand(time(NULL));
 #define MAX_NUMEROS 10
@@ -275,14 +275,14 @@ void juegoMemoria()
         
         system("CLS");
 
-        // Pedir al jugador que repita los números
+        // Pedir al jugador que repita los nÃºmeros
         cout << "Ingresa los numeros que memorizaste, separados por espacios:" << endl;
         for (int i = 0; i < nivel; ++i)
         {
             cin >> numerosUsuario[i];
         }
 
-        // Comparar números
+        // Comparar nÃºmeros
         bool correcto = true;
         for (int i = 0; i < nivel; ++i)
         {
@@ -296,7 +296,7 @@ void juegoMemoria()
 
         if (correcto)
         {
-            cout << "¡Correcto! Pasas al siguiente nivel." << endl;
+            cout << "Â¡Correcto! Pasas al siguiente nivel." << endl;
             int monedasGanadas = rand() % 5 + 1;
             monedas += monedasGanadas;
             cout << "Gano estas monedas: " << monedasGanadas << endl;
@@ -304,7 +304,7 @@ void juegoMemoria()
         }
         else
         {
-            cout << "¡Incorrecto! Fin del juego." << endl;
+            cout << "Â¡Incorrecto! Fin del juego." << endl;
             juegoTerminado = true;
             triste();
             cout << "******************************************************************************************************\n";
@@ -319,7 +319,7 @@ void verificarNecesidades()
 
     if (ahora - ultimaComida >= 300 && ahora >= tiempoNecesidades && !necesitaLimpiar)
     {
-        cout << "¡" << nombre << " ha hecho sus necesidades! Deberias limpiarlo." << endl;
+        cout << "Â¡" << nombre << " ha hecho sus necesidades! Deberias limpiarlo." << endl;
         necesitaLimpiar = true;
     }
 }
@@ -398,7 +398,7 @@ int main()
             }
             else if (opcion2 == 'b')
             {
-                if (!estaDormido) // Solo se puede dormir si no está ya dormido
+                if (!estaDormido) // Solo se puede dormir si no estÃ¡ ya dormido
                 {
                     dormido();
                     cout << endl;
@@ -410,40 +410,40 @@ int main()
                 }
                 else
                 {
-                    cout << nombre << " ya está dormido." << endl;
+                    cout << nombre << " ya estÃ¡ dormido." << endl;
                 }
             }
             else if (opcion2 == 'c')
             {
-                if (!estaDormido) // Solo se puede jugar si no está dormido
+                if (!estaDormido) // Solo se puede jugar si no estÃ¡ dormido
                 {
                     jugarPiedraPapelTijeras();
                 }
                 else
                 {
-                    cout << nombre << " está dormido. Espere a que se despierte." << endl;
+                    cout << nombre << " estÃ¡ dormido. Espere a que se despierte." << endl;
                 }
             }
             else if (opcion2 == 'd')
             {
-                if (!estaDormido) // Solo se puede jugar si no está dormido
+                if (!estaDormido) // Solo se puede jugar si no estÃ¡ dormido
                 {
                     jugarAdivinanza();
                 }
                 else
                 {
-                    cout << nombre << " está dormido. Espere a que se despierte." << endl;
+                    cout << nombre << " estÃ¡ dormido. Espere a que se despierte." << endl;
                 }
             }
             else if (opcion2 == 'e')
             {
-                if (!estaDormido) // Solo se puede jugar si no está dormido
+                if (!estaDormido) // Solo se puede jugar si no estÃ¡ dormido
                 {
                     juegoMemoria();
                 }
                 else
                 {
-                    cout << nombre << " está dormido. Espere a que se despierte." << endl;
+                    cout << nombre << " estÃ¡ dormido. Espere a que se despierte." << endl;
                 }
             }
             else if (opcion2 == 'f' && necesitaLimpiar)
